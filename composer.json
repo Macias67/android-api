@@ -10,6 +10,8 @@
 	"require" : {
 		"php" : ">=5.5.9",
 		"laravel/framework" : "5.2.*",
+		"jenssegers/date" : "^3.0",
+		"hashids/hashids": "^1.0",
 		"dingo/api": "1.0.*@dev",
 		"tymon/jwt-auth": "0.5.*"
 	},
