@@ -219,7 +219,7 @@ return [
 		/*
 		 *
 		 */
-		'API'        => Dingo\Api\Facade\AP::class,
+		'API'        => Dingo\Api\Facade\API::class,
 		'APIRoute'   => Dingo\Api\Facade\Route::class
 
 	],

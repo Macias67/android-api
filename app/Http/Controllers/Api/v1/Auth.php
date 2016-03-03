@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Usuario\Usuario;
 use App\Http\Requests;
+use Dingo\Api\Facade\API;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -15,6 +16,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class Auth extends Controller
 {
 	use Helpers;
+
+	public function me(Request $request)
+	{
+		return JWTAuth::parseToken()->authenticate();
+	}
 
 	public function register(Requests\CreateUsuario $request)
 	{
@@ -32,7 +38,7 @@ class Auth extends Controller
 
 		$response = [
 			'token' => $token,
-			'data'  =>$usuario
+			'data'  => $usuario
 		];
 
 		return $this->response->array($response);
@@ -57,6 +63,12 @@ class Auth extends Controller
 		}
 
 		// all good so return the token
-		return response()->json(compact('token'));
+		return $this->response->array(compact('token'));
+	}
+
+	public function validateToken()
+	{
+		// Our routes file should have already authenticated this token, so we just return success here
+		return API::response()->array(['status' => 'success'])->statusCode(200);
 	}
 }

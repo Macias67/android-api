@@ -9,14 +9,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 	$api->post('registro', ['uses' => 'Auth@register']);
 	$api->post('auth', ['uses' => 'Auth@authenticate']);
 
-	/**
-	 * Usuarios
-	 */
-	$api->resource('usuarios', 'Usuarios');
+	$api->group(['middleware' => 'jwt.auth'], function($api) {
+		$api->get('usuarios/yo', 'Auth@me');
+		$api->get('validatetoken', 'Auth@validateToken');
 
-	/**
-	 * Clientes
-	 */
-	$api->get('clientes', ['as' => 'clientes.index', 'uses' => 'Clientes@index']);
+		/**
+		 * Usuarios
+		 */
+		$api->resource('usuarios', 'Usuarios');
+
+		/**
+		 * Clientes
+		 */
+		$api->resource('clientes', 'Clientes');
+	});
+
 
 });
