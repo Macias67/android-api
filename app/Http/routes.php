@@ -1,4 +1,8 @@
 <?php
+Route::get('/', function() {
+	return view('welcome');
+});
+
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($api)
