@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class Auth extends Controller
 {
