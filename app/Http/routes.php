@@ -28,6 +28,4 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 		 */
 		$api->resource('clientes', 'Clientes');
 	});
-
-
 });

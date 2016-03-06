@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Usuario\Usuario;
 use App\Http\Requests;
+use App\Transformers\UsuarioTransformer;
 use Dingo\Api\Facade\API;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 class Auth extends Controller
 {
@@ -32,17 +32,11 @@ class Auth extends Controller
 			'fecha_nacimiento',
 			'email',
 			'sexo',
-			'password',
-			'ultima_sesion'
+			'password'
 		]));
-		$token = JWTAuth::fromUser($usuario);
+		$usuario->token = JWTAuth::fromUser($usuario);
 
-		$response = [
-			'token' => $token,
-			'data'  => $usuario
-		];
-
-		return $this->response->array($response);
+		return $this->response->item($usuario, new UsuarioTransformer());
 	}
 
 	public function authenticate(Request $request)

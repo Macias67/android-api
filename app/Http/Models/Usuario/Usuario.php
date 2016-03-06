@@ -45,5 +45,5 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password', 'remember_token', 'created_at', 'updated_at'];
+	protected $hidden = ['password', 'remember_token', 'ultima_sesion', 'created_at', 'updated_at'];
 }
