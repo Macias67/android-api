@@ -15,7 +15,7 @@ class CreateUsuario extends Request
 	{
 		return true;
 	}
-
+	
 	/**
 	 * Get the validation rules that apply to the request.
 	 *
@@ -23,13 +23,29 @@ class CreateUsuario extends Request
 	 */
 	public function rules()
 	{
-		return [
-			'nombre'           => 'required|max:45',
-			'apellido'         => 'required|max:45',
-			'fecha_nacimiento' => 'required|date_format:d/m/Y',
-			'email'            => 'required|email|max:45|unique:usr_usuarios,email',
-			'sexo'             => 'required|in:H,M',
-			'password'         => 'required'
-		];
+		
+		if ($this->get('type') == 'fb')
+		{
+			return [
+				'id_facebook'      => 'required',
+				'nombre'           => 'required|max:45',
+				'apellido'         => 'required|max:45',
+				'fecha_nacimiento' => 'required|date_format:d/m/Y',
+				'email'            => 'required|email|max:45',
+				'sexo'             => 'required|in:H,M'
+			];
+		}
+		else
+		{
+			return [
+				'nombre'           => 'required|max:45',
+				'apellido'         => 'required|max:45',
+				'fecha_nacimiento' => 'required|date_format:d/m/Y',
+				'email'            => 'required|email|max:45|unique:usr_usuarios,email',
+				'sexo'             => 'required|in:H,M',
+				'password'         => 'required'
+			];
+		}
+		
 	}
 }

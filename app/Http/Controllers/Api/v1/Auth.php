@@ -25,17 +25,34 @@ class Auth extends Controller
 
 	public function register(Requests\CreateUsuario $request)
 	{
-		$usuario = Usuario::create($request->only([
-			'id',
-			'nombre',
-			'apellido',
-			'fecha_nacimiento',
-			'email',
-			'sexo',
-			'password'
-		]));
-		$usuario->token = JWTAuth::fromUser($usuario);
+		$tipo = $request->get('type');
 
+		if ($tipo == 'fb')
+		{
+			$usuario = Usuario::firstOrCreate($request->only([
+				'id',
+				'id_facebook',
+				'nombre',
+				'apellido',
+				'fecha_nacimiento',
+				'email',
+				'sexo'
+			]));
+
+		} else
+		{
+			$usuario = Usuario::create($request->only([
+				'id',
+				'nombre',
+				'apellido',
+				'fecha_nacimiento',
+				'email',
+				'sexo',
+				'password'
+			]));
+		}
+
+		$usuario->token = JWTAuth::fromUser($usuario);
 		return $this->response->item($usuario, new UsuarioTransformer());
 	}
 

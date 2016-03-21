@@ -31,6 +31,7 @@ class Usuario extends Model implements AuthenticatableContract, AuthorizableCont
 	 */
 	protected $fillable = [
 		'id',
+		'id_facebook',
 		'nombre',
 		'apellido',
 		'fecha_nacimiento',
