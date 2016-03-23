@@ -25,34 +25,50 @@ class Auth extends Controller
 
 	public function register(Requests\CreateUsuario $request)
 	{
-		$tipo = $request->get('type');
-
-		if ($tipo == 'fb')
-		{
-			$usuario = Usuario::firstOrCreate($request->only([
-				'id',
-				'id_facebook',
-				'nombre',
-				'apellido',
-				'fecha_nacimiento',
-				'email',
-				'sexo'
-			]));
-
-		} else
-		{
-			$usuario = Usuario::create($request->only([
-				'id',
-				'nombre',
-				'apellido',
-				'fecha_nacimiento',
-				'email',
-				'sexo',
-				'password'
-			]));
-		}
-
+		$usuario = Usuario::create($request->only([
+			'id',
+			'nombre',
+			'apellido',
+			'fecha_nacimiento',
+			'email',
+			'sexo',
+			'password'
+		]));
+		
 		$usuario->token = JWTAuth::fromUser($usuario);
+		return $this->response->item($usuario, new UsuarioTransformer());
+	}
+
+	public function registerFB(Requests\CreateUserFB $request)
+	{
+		try
+		{
+			// Si el usuario no se ha registrado, lo registro
+			if (!$token = JWTAuth::attempt($request->only('email', 'password')))
+			{
+				$usuario = Usuario::create($request->only([
+					'id',
+					'id_facebook',
+					'nombre',
+					'apellido',
+					'fecha_nacimiento',
+					'email',
+					'sexo',
+					'password'
+				]));
+				$usuario->token = JWTAuth::fromUser($usuario);
+			} else
+			{
+				$usuario = Usuario::where($request->only(['email']))->first();
+				$usuario->token = $token;
+			}
+		}
+		catch (JWTException $e)
+		{
+			// something went wrong whilst attempting to encode the token
+			throw new HttpException($e->getStatusCode(), $e->getMessage());
+		}
+		
 		return $this->response->item($usuario, new UsuarioTransformer());
 	}
 

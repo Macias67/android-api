@@ -11,6 +11,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 	 * Auth
 	 */
 	$api->post('registro', ['uses' => 'Auth@register']);
+	$api->post('registro/fb', ['uses' => 'Auth@registerFB']);
 	$api->post('auth', ['uses' => 'Auth@authenticate']);
 
 	$api->group(['middleware' => 'jwt.auth'], function($api)

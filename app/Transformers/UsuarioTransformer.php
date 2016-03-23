@@ -15,8 +15,9 @@ class UsuarioTransformer extends TransformerAbstract
 	public function transform(Usuario $usuario)
 	{
 		return [
-			'token' => $usuario->token,
+			'token'            => $usuario->token,
 			'id'               => $usuario->id,
+			'id_facebook'      => $usuario->id_facebook,
 			'nombre'           => $usuario->nombre,
 			'apellido'         => $usuario->apellido,
 			'fecha_nacimiento' => $usuario->fecha_nacimiento,
