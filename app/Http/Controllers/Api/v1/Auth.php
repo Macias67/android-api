@@ -9,6 +9,7 @@ use App\Transformers\UsuarioTransformer;
 use Dingo\Api\Facade\API;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -43,20 +44,33 @@ class Auth extends Controller
 	{
 		try
 		{
-			// Si el usuario no se ha registrado, lo registro
+			// Si el usuario no tiene las credenciales correctas
 			if (!$token = JWTAuth::attempt($request->only('email', 'password')))
 			{
-				$usuario = Usuario::create($request->only([
-					'id',
-					'id_facebook',
-					'nombre',
-					'apellido',
-					'fecha_nacimiento',
-					'email',
-					'sexo',
-					'password'
-				]));
-				$usuario->token = JWTAuth::fromUser($usuario);
+				// Verifico si el email ya existe
+				$usuario = Usuario::where($request->only('email'))->first();
+				if ($usuario == null)
+				{
+					// Si no existe, creo el usuario
+					$usuario = Usuario::create($request->only([
+						'id',
+						'id_facebook',
+						'nombre',
+						'apellido',
+						'fecha_nacimiento',
+						'email',
+						'sexo',
+						'password'
+					]));
+					$usuario->token = JWTAuth::fromUser($usuario);
+				}
+				else
+				{
+					// Si existe, actualizo ID de facebook.
+					 Usuario::where($request->only('email'))->update($request->only(['id_facebook']));
+					$usuario = Usuario::where($request->only('email'))->first();
+					$usuario->token = JWTAuth::fromUser($usuario);
+				}
 			} else
 			{
 				$usuario = Usuario::where($request->only(['email']))->first();
@@ -83,6 +97,11 @@ class Auth extends Controller
 			{
 				throw new UnauthorizedHttpException(null, 'No se puede autenticar con este nombre de usuario y contraseña.');
 			}
+			else
+			{
+				$usuario = Usuario::where($request->only(['email']))->first();
+				$usuario->token = $token;
+			}
 		}
 		catch (JWTException $e)
 		{
@@ -91,7 +110,7 @@ class Auth extends Controller
 		}
 
 		// all good so return the token
-		return $this->response->array(compact('token'));
+		return $this->response->item($usuario, new UsuarioTransformer());
 	}
 
 	public function validateToken()
