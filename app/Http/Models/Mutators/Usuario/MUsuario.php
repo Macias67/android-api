@@ -43,7 +43,7 @@ trait MUsuario
 
 	public function setFechaNacimientoAttribute($value)
 	{
-		$this->attributes['fecha_nacimiento'] = Date::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+		$this->attributes['fecha_nacimiento'] = (!is_null($value) && !empty($value)) ? Date::createFromFormat('d/m/Y', $value)->format('Y-m-d') : null;
 	}
 
 	public function setPasswordAttribute($value)

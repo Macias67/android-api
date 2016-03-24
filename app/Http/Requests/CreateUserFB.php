@@ -27,7 +27,7 @@ class CreateUserFB extends Request
 			'id_facebook'      => 'required',
 			'nombre'           => 'required|max:45',
 			'apellido'         => 'required|max:45',
-			'fecha_nacimiento' => 'required|date_format:d/m/Y',
+			//'fecha_nacimiento' => 'required|date_format:d/m/Y',
 			'email'            => 'required|email|max:45',
 			'sexo'             => 'required|in:H,M',
 			'password'         => 'required'
