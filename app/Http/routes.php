@@ -28,5 +28,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 		 * Clientes
 		 */
 		$api->resource('clientes', 'Clientes');
+		
+		/**
+		 * Tags
+		 */
+		$api->resource('tags', 'Tags');
 	});
 });

@@ -10,7 +10,7 @@
  */
 
 return [
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| JWT Authentication Secret
@@ -20,9 +20,9 @@ return [
 	| A helper command is provided for this: `php artisan jwt:generate`
 	|
 	*/
-
+	
 	'secret' => env('JWT_SECRET', 'Ps41qZ1d4FgSOUW3OJjXpWHhgJAcCA7f'),
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| JWT time to live
@@ -32,9 +32,9 @@ return [
 	| Defaults to 1 hour
 	|
 	*/
-
-	'ttl' => 60,
-
+	
+	'ttl' => 10080, // 1 semana
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Refresh time to live
@@ -46,9 +46,9 @@ return [
 	| Defaults to 2 weeks
 	|
 	*/
-
+	
 	'refresh_ttl' => 20160,
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| JWT hashing algorithm
@@ -60,9 +60,9 @@ return [
 	| for possible values
 	|
 	*/
-
+	
 	'algo' => 'HS256',
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| User Model namespace
@@ -72,9 +72,9 @@ return [
 	| e.g. 'Acme\Entities\User'
 	|
 	*/
-
+	
 	'user' => 'App\Http\Models\Usuario\Usuario',
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| User identifier
@@ -84,9 +84,9 @@ return [
 	| claim of the token payload.
 	|
 	*/
-
+	
 	'identifier' => 'id',
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Required Claims
@@ -97,9 +97,9 @@ return [
 	| present in the payload.
 	|
 	*/
-
+	
 	'required_claims' => ['iss', 'iat', 'exp', 'nbf', 'sub', 'jti'],
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Blacklist Enabled
@@ -109,9 +109,9 @@ return [
 	| If you do not want or need this functionality, then set this to false.
 	|
 	*/
-
+	
 	'blacklist_enabled' => env('JWT_BLACKLIST_ENABLED', true),
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Providers
@@ -120,9 +120,9 @@ return [
 	| Specify the various providers used throughout the package.
 	|
 	*/
-
+	
 	'providers' => [
-
+		
 		/*
 		|--------------------------------------------------------------------------
 		| User Provider
@@ -132,9 +132,9 @@ return [
 		| on the subject claim
 		|
 		*/
-
+		
 		'user' => 'Tymon\JWTAuth\Providers\User\EloquentUserAdapter',
-
+		
 		/*
 		|--------------------------------------------------------------------------
 		| JWT Provider
@@ -143,9 +143,9 @@ return [
 		| Specify the provider that is used to create and decode the tokens.
 		|
 		*/
-
+		
 		'jwt' => 'Tymon\JWTAuth\Providers\JWT\NamshiAdapter',
-
+		
 		/*
 		|--------------------------------------------------------------------------
 		| Authentication Provider
@@ -154,9 +154,9 @@ return [
 		| Specify the provider that is used to authenticate users.
 		|
 		*/
-
+		
 		'auth' => 'Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter',
-
+		
 		/*
 		|--------------------------------------------------------------------------
 		| Storage Provider
@@ -165,9 +165,9 @@ return [
 		| Specify the provider that is used to store tokens in the blacklist
 		|
 		*/
-
+		
 		'storage' => 'Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter',
-
+	
 	],
 
 ];
