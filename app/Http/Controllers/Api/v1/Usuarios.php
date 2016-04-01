@@ -88,33 +88,4 @@ class Usuarios extends Controller
 	{
 		//
 	}
-
-
-	public function putTags(Request $request, $id) {
-		dd($request->all());
-	}
-
-	public function getTags() {
-		return '{
-    "data":{
-        "tags":[
-            {"id":"eMgRBkrQZepY8Dxl","tag":"ropa de mujer"},
-            {"id":"wD1VnMqlx5qQAEKz","tag":"arreglos florales"},
-            {"id":"Y7AaMdp47NrJyGkB","tag":"perfumes"},
-            {"id":"8ekd73rKkwrwNg2M","tag":"lentes"},
-            {"id":"z7M5XOrORAolNvKj","tag":"ropa de hombre"},
-            {"id":"YVJlZgoExnqM3nW7","tag":"micheladas"},
-            {"id":"DOxLAbqBK0oywv1N","tag":"frapuccino"},
-            {"id":"Rb6DB0qwzKp3zlgW","tag":"flores"},
-            {"id":"bP79zmp43grgkKx1","tag":"heineken"},
-            {"id":"QMyOYkqGQYrmJ1AV","tag":"calzado"},
-            {"id":"xlYnXWoXDDokKdJ4","tag":"zapatos de fútbol"},
-            {"id":"l0w6A7odm6rEYBvK","tag":"centros de mesa"},
-            {"id":"XVwJ4Mo1dXqAZLQg","tag":"tecate"},
-            {"id":"PZYWB4qBdMr79zey","tag":"regalos"},
-            {"id":"yReZY0odKJq2d9gD","tag":"cerveza inidio"}
-        ]
-        
-    }';
-	}
 }

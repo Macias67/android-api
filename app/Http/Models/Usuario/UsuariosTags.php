@@ -14,7 +14,7 @@ class UsuariosTags extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'usr_usuarios_tags';
+	protected $table = 'usr_usuario_tags';
 
 	public $incrementing = false;
 
@@ -28,4 +28,14 @@ class UsuariosTags extends Model
 		'usuario_id',
 		'tag_id'
 	];
+	
+	public static function getTableName()
+	{
+		return with(new static)->getTable();
+	}
+
+	public function scopeDeleteTagsUser($query, $usuario_id)
+	{
+		return $query->where('usuario_id', $usuario_id)->delete();
+	}
 }

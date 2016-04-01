@@ -23,10 +23,9 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 		 * Usuarios
 		 */
 		$api->resource('usuarios', 'Usuarios');
-		$api->group(['prefix' => 'usuarios/{id}'], function($api) {
+		$api->group(['prefix' => 'usuarios/{id}'], function($api)
+		{
 			$api->resource('tags', 'UsuariosTags');
-			//$api->get('tags', ['uses' => 'Usuarios@getTags']);
-			//$api->put('tags', ['uses' => 'Usuarios@putTags']);
 		});
 
 		/**
