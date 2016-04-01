@@ -16,13 +16,18 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
 
 	$api->group(['middleware' => 'jwt.auth'], function($api)
 	{
-		$api->get('usuarios/yo', 'Auth@me');
+		$api->get('usuarios/me', 'Auth@me');
 		$api->get('validatetoken', 'Auth@validateToken');
 
 		/**
 		 * Usuarios
 		 */
 		$api->resource('usuarios', 'Usuarios');
+		$api->group(['prefix' => 'usuarios/{id}'], function($api) {
+			$api->resource('tags', 'UsuariosTags');
+			//$api->get('tags', ['uses' => 'Usuarios@getTags']);
+			//$api->put('tags', ['uses' => 'Usuarios@putTags']);
+		});
 
 		/**
 		 * Clientes
